@@ -13,6 +13,10 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import android.widget.Button;
+import android.view.*;
+import android.widget.EditText;
+
 
 /**
  * Main class for our UI design lab.
@@ -20,7 +24,10 @@ import org.json.JSONObject;
 public final class MainActivity extends AppCompatActivity {
     /** Default logging tag for messages from the main activity. */
     private static final String TAG = "Lab11:Main";
-
+    /**
+     * response?.
+     */
+    private JSONObject respone;
     /** Request queue for our API requests. */
     private static RequestQueue requestQueue;
 
@@ -37,6 +44,17 @@ public final class MainActivity extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(this);
 
         setContentView(R.layout.activity_main);
+        final Button getWeather = findViewById(R.id.get_weather);
+        getWeather.setOnClickListener(new View.OnClickListener() {
+            public void onClick(final View v) {
+                startAPICall("192.17.96.8");
+                String input = "Anshul sucks";
+                EditText editText = (EditText) findViewById(R.id.editView);
+                editText.append(input);
+
+
+            }
+        });
 
         startAPICall("192.17.96.8");
     }
@@ -63,6 +81,7 @@ public final class MainActivity extends AppCompatActivity {
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(final JSONObject response) {
+                            respone = response;
                             apiCallDone(response);
                         }
                     }, new Response.ErrorListener() {
